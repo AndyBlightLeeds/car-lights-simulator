@@ -1,2 +1,16 @@
-# car-lights-simulator
+# Car Lights Simulator
+
 Simulate controlling the lights on a car.
+
+Written with help from [Claude.ai](https://claude.ai/).
+
+The lights that can be controlled are:
+
+* Headlights: dipped (dim white), full beam (bright white).
+* Side Lights: (rear: left and right dim red, front: left and right dim white)
+* Brake Lights: (rear: left and right bright red)
+* Indicators: (all orange/amber), left, right , hazard.
+* Reverse: (bright white on rear lamp clusters)
+* Fog light: (bright red on rear lamp clusters)
+
+© 2025, Andy Blight.
