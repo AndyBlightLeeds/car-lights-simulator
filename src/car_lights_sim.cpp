@@ -8,48 +8,62 @@ void demo_features(CarLights *car) {
   static int call_count = 0;
   call_count++;
   static int state = 0;
-  if (call_count % 5 == 0) {
+  if (call_count % 20 == 0) {
     switch (state) {
       case 0:
-        car->setHeadlights(true);
+        car->SetHeadlights(true);
         std::cout << "\n\nDEMO: Headlights" << std::endl;
         state++;
         break;
       case 1:
-        car->setBrakeLights(true);
+        car->SetBrakeLights(true);
         std::cout << "\n\nDEMO: Headlights and brake lights" << std::endl;
         state++;
         break;
       case 2:
-        car->setBrakeLights(false);
+        car->SetBrakeLights(false);
         std::cout << "\n\nDEMO: Headlights, left indicators" << std::endl;
-        car->setLeftIndicator(true);
+        car->SetLeftIndicator(true);
         state++;
         break;
       case 3:
-        car->setLeftIndicator(false);
-        car->setRightIndicator(true);
+        car->SetLeftIndicator(false);
+        car->SetRightIndicator(true);
         std::cout << "\n\nDEMO: Headlights, right indicators" << std::endl;
         state++;
         break;
       case 4:
-        car->setHazardLights(true);
+        car->SetHazardLights(true);
         std::cout << "\n\nDEMO: Headlights, hazard" << std::endl;
         state++;
         break;
       case 5:
-        car->setHazardLights(false);
-        car->setHeadlights(false);
+        car->SetHazardLights(false);
+        car->SetHeadlights(false);
         std::cout << "\n\nDEMO: Right indicators" << std::endl;
         state++;
         break;
       case 6:
-        car->setRightIndicator(false);
+        car->SetRightIndicator(false);
+        car->SetReversingLights(true);
+        std::cout << "\n\nDEMO: reversing" << std::endl;
+        state++;
+        break;
+      case 7:
+        car->SetReversingLights(false);
+        car->SetSideLights(true);
+        std::cout << "\n\nDEMO: sides on" << std::endl;
+        state++;
+        break;
+      case 8:
+        car->SetSideLights(true);
         std::cout << "\n\nDEMO: All off" << std::endl;
-        state = 0;
+        state++;
         break;
 
       default:
+        std::cout << "\nDEMO: Done\n" << std::endl;
+        exit(1);
         break;
     }
   }
@@ -63,7 +77,7 @@ int main() {
   // Main loop
   while (true) {
     demo_features(&car);
-    car.updateLights();
+    car.UpdateLights();
     sleep_for(100ms);
   }
 }

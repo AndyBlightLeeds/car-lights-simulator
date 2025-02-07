@@ -1,26 +1,28 @@
 #pragma once
 
+#include "leds.hpp"
+
 class CarLights {
  public:
   CarLights();
-  void setHeadlights(bool on);
-  void setBrakeLights(bool on);
-  void setLeftIndicator(bool on);
-  void setRightIndicator(bool on);
-  void setHazardLights(bool on);
+  void SetHeadlights(bool on);
+  void SetBrakeLights(bool on);
+  void SetReversingLights(bool on);
+  void SetSideLights(bool on);
+  void SetLeftIndicator(bool on);
+  void SetRightIndicator(bool on);
+  void SetHazardLights(bool on);
   // This would typically be called in your main loop
-  void updateLights();
+  void UpdateLights();
 
- protected:
-  // Protected so test harness can access them.
-  bool headlights_on_;
-  bool brake_lights_on_;
+ private:
+  // All of the leds on the car.
+  Leds leds_;
+  // High level logic for the indicators and hazard lights.
   bool left_indicator_on_;
   bool right_indicator_on_;
   bool hazard_lights_on_;
   // Store previous indicator states when hazards are activated
   bool previous_left_indicator_;
   bool previous_right_indicator_;
-  // Helper function to ensure mutually exclusive indicator states
-  void clearIndicators();
 };

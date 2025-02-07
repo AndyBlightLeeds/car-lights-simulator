@@ -8,27 +8,27 @@
 class TestableCarLights : public CarLights {
  public:
   // Make this method public for testing
-  using CarLights::updateLights;
+  using CarLights::UpdateLights;
 
   // Add method to capture console output
   std::string getLightsStatus() {
     std::stringstream buffer;
     std::streambuf* old = std::cout.rdbuf(buffer.rdbuf());
 
-    updateLights();
+    UpdateLights();
 
     std::cout.rdbuf(old);
     return buffer.str();
   }
 
   // Add getters for testing internal state
-  bool isHeadlightsOn() const { return headlights_on_; }
-  bool isBrakeLightsOn() const { return brake_lights_on_; }
-  bool isLeftIndicatorOn() const { return left_indicator_on_; }
-  bool isRightIndicatorOn() const { return right_indicator_on_; }
-  bool isHazardLightsOn() const { return hazard_lights_on_; }
-  bool getPreviousLeftIndicator() const { return previous_left_indicator_; }
-  bool getPreviousRightIndicator() const { return previous_right_indicator_; }
+  bool IsHeadlightsOn() const { return headlights_on_; }
+  bool IsBrakeLightsOn() const { return brake_lights_on_; }
+  bool IsLeftIndicatorOn() const { return left_indicator_on_; }
+  bool IsRightIndicatorOn() const { return right_indicator_on_; }
+  bool IsHazardLightsOn() const { return hazard_lights_on_; }
+  bool GetPreviousLeftIndicator() const { return previous_left_indicator_; }
+  bool GetPreviousRightIndicator() const { return previous_right_indicator_; }
 };
 
 // Test fixture for CarLights
@@ -47,99 +47,99 @@ class CarLightsTest : public ::testing::Test {
 
 // Basic Functionality Tests
 TEST_F(CarLightsTest, InitialState) {
-  EXPECT_FALSE(lights.isHeadlightsOn());
-  EXPECT_FALSE(lights.isBrakeLightsOn());
-  EXPECT_FALSE(lights.isLeftIndicatorOn());
-  EXPECT_FALSE(lights.isRightIndicatorOn());
-  EXPECT_FALSE(lights.isHazardLightsOn());
+  EXPECT_FALSE(lights.IsHeadlightsOn());
+  EXPECT_FALSE(lights.IsBrakeLightsOn());
+  EXPECT_FALSE(lights.IsLeftIndicatorOn());
+  EXPECT_FALSE(lights.IsRightIndicatorOn());
+  EXPECT_FALSE(lights.IsHazardLightsOn());
 }
 
 TEST_F(CarLightsTest, HeadlightsToggle) {
-  lights.setHeadlights(true);
-  EXPECT_TRUE(lights.isHeadlightsOn());
+  lights.SetHeadlights(true);
+  EXPECT_TRUE(lights.IsHeadlightsOn());
 
-  lights.setHeadlights(false);
-  EXPECT_FALSE(lights.isHeadlightsOn());
+  lights.SetHeadlights(false);
+  EXPECT_FALSE(lights.IsHeadlightsOn());
 }
 
 TEST_F(CarLightsTest, BrakeLights) {
-  lights.setBrakeLights(true);
-  EXPECT_TRUE(lights.isBrakeLightsOn());
+  lights.SetBrakeLights(true);
+  EXPECT_TRUE(lights.IsBrakeLightsOn());
 
-  lights.setBrakeLights(false);
-  EXPECT_FALSE(lights.isBrakeLightsOn());
+  lights.SetBrakeLights(false);
+  EXPECT_FALSE(lights.IsBrakeLightsOn());
 }
 
 // Indicator Tests
 TEST_F(CarLightsTest, LeftIndicator) {
-  lights.setLeftIndicator(true);
-  EXPECT_TRUE(lights.isLeftIndicatorOn());
-  EXPECT_FALSE(lights.isRightIndicatorOn());
+  lights.SetLeftIndicator(true);
+  EXPECT_TRUE(lights.IsLeftIndicatorOn());
+  EXPECT_FALSE(lights.IsRightIndicatorOn());
 
-  lights.setLeftIndicator(false);
-  EXPECT_FALSE(lights.isLeftIndicatorOn());
+  lights.SetLeftIndicator(false);
+  EXPECT_FALSE(lights.IsLeftIndicatorOn());
 }
 
 TEST_F(CarLightsTest, RightIndicator) {
-  lights.setRightIndicator(true);
-  EXPECT_TRUE(lights.isRightIndicatorOn());
-  EXPECT_FALSE(lights.isLeftIndicatorOn());
+  lights.SetRightIndicator(true);
+  EXPECT_TRUE(lights.IsRightIndicatorOn());
+  EXPECT_FALSE(lights.IsLeftIndicatorOn());
 
-  lights.setRightIndicator(false);
-  EXPECT_FALSE(lights.isRightIndicatorOn());
+  lights.SetRightIndicator(false);
+  EXPECT_FALSE(lights.IsRightIndicatorOn());
 }
 
 TEST_F(CarLightsTest, MutuallyExclusiveIndicators) {
-  lights.setLeftIndicator(true);
-  EXPECT_TRUE(lights.isLeftIndicatorOn());
+  lights.SetLeftIndicator(true);
+  EXPECT_TRUE(lights.IsLeftIndicatorOn());
 
-  lights.setRightIndicator(true);
-  EXPECT_TRUE(lights.isRightIndicatorOn());
-  EXPECT_FALSE(lights.isLeftIndicatorOn());
+  lights.SetRightIndicator(true);
+  EXPECT_TRUE(lights.IsRightIndicatorOn());
+  EXPECT_FALSE(lights.IsLeftIndicatorOn());
 }
 
 // Hazard Light Tests
 TEST_F(CarLightsTest, BasicHazardOperation) {
-  lights.setHazardLights(true);
-  EXPECT_TRUE(lights.isHazardLightsOn());
-  EXPECT_FALSE(lights.isLeftIndicatorOn());
-  EXPECT_FALSE(lights.isRightIndicatorOn());
+  lights.SetHazardLights(true);
+  EXPECT_TRUE(lights.IsHazardLightsOn());
+  EXPECT_FALSE(lights.IsLeftIndicatorOn());
+  EXPECT_FALSE(lights.IsRightIndicatorOn());
 
-  lights.setHazardLights(true);
-  EXPECT_FALSE(lights.isHazardLightsOn());
+  lights.SetHazardLights(true);
+  EXPECT_FALSE(lights.IsHazardLightsOn());
 }
 
 TEST_F(CarLightsTest, HazardsPreserveIndicatorState) {
   // Set left indicator
-  lights.setLeftIndicator(true);
-  EXPECT_TRUE(lights.isLeftIndicatorOn());
+  lights.SetLeftIndicator(true);
+  EXPECT_TRUE(lights.IsLeftIndicatorOn());
 
   // Enable hazards
-  lights.setHazardLights(true);
-  EXPECT_TRUE(lights.isHazardLightsOn());
-  EXPECT_FALSE(lights.isLeftIndicatorOn());
-  EXPECT_TRUE(lights.getPreviousLeftIndicator());
+  lights.SetHazardLights(true);
+  EXPECT_TRUE(lights.IsHazardLightsOn());
+  EXPECT_FALSE(lights.IsLeftIndicatorOn());
+  EXPECT_TRUE(lights.GetPreviousLeftIndicator());
 
   // Disable hazards
-  lights.setHazardLights(false);
-  EXPECT_FALSE(lights.isHazardLightsOn());
-  EXPECT_TRUE(lights.isLeftIndicatorOn());
+  lights.SetHazardLights(false);
+  EXPECT_FALSE(lights.IsHazardLightsOn());
+  EXPECT_TRUE(lights.IsLeftIndicatorOn());
 }
 
 TEST_F(CarLightsTest, IndicatorsBlockedDuringHazards) {
-  lights.setHazardLights(true);
+  lights.SetHazardLights(true);
 
-  lights.setLeftIndicator(true);
-  lights.setRightIndicator(true);
+  lights.SetLeftIndicator(true);
+  lights.SetRightIndicator(true);
 
-  EXPECT_TRUE(lights.isHazardLightsOn());
-  EXPECT_FALSE(lights.isLeftIndicatorOn());
-  EXPECT_FALSE(lights.isRightIndicatorOn());
+  EXPECT_TRUE(lights.IsHazardLightsOn());
+  EXPECT_FALSE(lights.IsLeftIndicatorOn());
+  EXPECT_FALSE(lights.IsRightIndicatorOn());
 }
 
 // Blinking Behavior Tests
 TEST_F(CarLightsTest, IndicatorBlinking) {
-  lights.setLeftIndicator(true);
+  lights.SetLeftIndicator(true);
 
   std::string initial_state = lights.getLightsStatus();
   std::this_thread::sleep_for(std::chrono::milliseconds(600));
@@ -149,7 +149,7 @@ TEST_F(CarLightsTest, IndicatorBlinking) {
 }
 
 TEST_F(CarLightsTest, HazardBlinking) {
-  lights.setHazardLights(true);
+  lights.SetHazardLights(true);
 
   std::string initial_state = lights.getLightsStatus();
   std::this_thread::sleep_for(std::chrono::milliseconds(600));
