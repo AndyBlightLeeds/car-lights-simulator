@@ -22,6 +22,10 @@ make
 ./car_lights_sim
 ```
 
+## Bugs
+
+* Indicators don't work properly in the sim code.
+
 ## Copyright
 
 © 2025, Andy Blight.

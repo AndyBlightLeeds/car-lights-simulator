@@ -3,11 +3,11 @@
 class CarLights {
  public:
   CarLights();
-  void toggleHeadlights();
+  void setHeadlights(bool on);
   void setBrakeLights(bool on);
   void setLeftIndicator(bool on);
   void setRightIndicator(bool on);
-  void toggleHazardLights();
+  void setHazardLights(bool on);
   // This would typically be called in your main loop
   void updateLights();
 

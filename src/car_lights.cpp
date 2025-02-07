@@ -13,7 +13,7 @@ CarLights::CarLights()
       previous_left_indicator_(false),
       previous_right_indicator_(false) {}
 
-void CarLights::toggleHeadlights() { headlights_on_ = !headlights_on_; }
+void CarLights::setHeadlights(bool on) { headlights_on_ = on; }
 
 void CarLights::setBrakeLights(bool on) { brake_lights_on_ = on; }
 
@@ -44,8 +44,8 @@ void CarLights::setRightIndicator(bool on) {
   }
 }
 
-void CarLights::toggleHazardLights() {
-  if (!hazard_lights_on_) {
+void CarLights::setHazardLights(bool on) {
+  if (on) {
     // Store current indicator states
     previous_left_indicator_ = left_indicator_on_;
     previous_right_indicator_ = right_indicator_on_;
@@ -79,16 +79,12 @@ void CarLights::updateLights() {
   }
 
   // Debug output - you would replace this with actual hardware control
-  std::cout << "\rLights Status: ";
+  std::cout << "\nLights Status: ";
   std::cout << "Headlights[" << (headlights_on_ ? "ON" : "OFF") << "] ";
   std::cout << "Brake[" << (brake_lights_on_ ? "ON" : "OFF") << "] ";
-
-  if (hazard_lights_on_) {
-    std::cout << "HAZARD[" << (blink_state ? "ON" : "OFF") << "] ";
-  } else {
-    std::cout << "Left[" << (left_indicator_on_ && blink_state ? "ON" : "OFF")
-              << "] ";
-    std::cout << "Right[" << (right_indicator_on_ && blink_state ? "ON" : "OFF")
-              << "] ";
-  }
+  std::cout << "Left[" << (left_indicator_on_ && blink_state ? "ON" : "OFF")
+            << "] ";
+  std::cout << "Right[" << (right_indicator_on_ && blink_state ? "ON" : "OFF")
+            << "] ";
+  std::cout << "Hazards[" << (hazard_lights_on_ ? "ON" : "OFF") << "] ";
 }

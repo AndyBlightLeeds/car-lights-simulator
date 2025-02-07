@@ -55,10 +55,10 @@ TEST_F(CarLightsTest, InitialState) {
 }
 
 TEST_F(CarLightsTest, HeadlightsToggle) {
-  lights.toggleHeadlights();
+  lights.setHeadlights(true);
   EXPECT_TRUE(lights.isHeadlightsOn());
 
-  lights.toggleHeadlights();
+  lights.setHeadlights(false);
   EXPECT_FALSE(lights.isHeadlightsOn());
 }
 
@@ -100,12 +100,12 @@ TEST_F(CarLightsTest, MutuallyExclusiveIndicators) {
 
 // Hazard Light Tests
 TEST_F(CarLightsTest, BasicHazardOperation) {
-  lights.toggleHazardLights();
+  lights.setHazardLights(true);
   EXPECT_TRUE(lights.isHazardLightsOn());
   EXPECT_FALSE(lights.isLeftIndicatorOn());
   EXPECT_FALSE(lights.isRightIndicatorOn());
 
-  lights.toggleHazardLights();
+  lights.setHazardLights(true);
   EXPECT_FALSE(lights.isHazardLightsOn());
 }
 
@@ -115,19 +115,19 @@ TEST_F(CarLightsTest, HazardsPreserveIndicatorState) {
   EXPECT_TRUE(lights.isLeftIndicatorOn());
 
   // Enable hazards
-  lights.toggleHazardLights();
+  lights.setHazardLights(true);
   EXPECT_TRUE(lights.isHazardLightsOn());
   EXPECT_FALSE(lights.isLeftIndicatorOn());
   EXPECT_TRUE(lights.getPreviousLeftIndicator());
 
   // Disable hazards
-  lights.toggleHazardLights();
+  lights.setHazardLights(false);
   EXPECT_FALSE(lights.isHazardLightsOn());
   EXPECT_TRUE(lights.isLeftIndicatorOn());
 }
 
 TEST_F(CarLightsTest, IndicatorsBlockedDuringHazards) {
-  lights.toggleHazardLights();
+  lights.setHazardLights(true);
 
   lights.setLeftIndicator(true);
   lights.setRightIndicator(true);
@@ -149,7 +149,7 @@ TEST_F(CarLightsTest, IndicatorBlinking) {
 }
 
 TEST_F(CarLightsTest, HazardBlinking) {
-  lights.toggleHazardLights();
+  lights.setHazardLights(true);
 
   std::string initial_state = lights.getLightsStatus();
   std::this_thread::sleep_for(std::chrono::milliseconds(600));
