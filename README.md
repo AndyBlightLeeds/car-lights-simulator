@@ -13,4 +13,15 @@ The lights that can be controlled are:
 * Reverse: (bright white on rear lamp clusters)
 * Fog light: (bright red on rear lamp clusters)
 
+## Build and run
+
+```bash
+cd src
+make
+./car_lights_test
+./car_lights_sim
+```
+
+## Copyright
+
 © 2025, Andy Blight.
