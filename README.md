@@ -18,13 +18,14 @@ The lights that can be controlled are:
 ```bash
 cd src
 make
-./car_lights_test
 ./car_lights_sim
 ```
 
+NOTE: The test code built a while ago but after all the refactoring, it is now broken.  The `car_light_sim` tests most of the functions that matter although it is not automatic.
+
 ## Bugs
 
-* Indicators don't work properly in the sim code.
+* None that I'm aware of.
 
 ## Copyright
 
