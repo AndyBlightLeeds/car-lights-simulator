@@ -11,6 +11,6 @@ all: $(BINS)
 .PHONY: clean
 
 clean:
-    $(RM) $(OBJECTS) $(DEPS) $(BINS)
+	$(RM) $(OBJECTS) $(DEPS) $(BINS)
 
 -include $(DEPS)
