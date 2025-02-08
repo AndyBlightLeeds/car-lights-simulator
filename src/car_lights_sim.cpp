@@ -2,9 +2,9 @@
 #include <iostream>
 #include <thread>
 
-#include "light_switches.hpp"
+#include "electronics.hpp"
 
-void demo_features(LightSwitches *switches) {
+void demo_features(Electronics *electronics) {
   static int call_count = 0;
   call_count++;
   static int state = 0;
@@ -12,52 +12,52 @@ void demo_features(LightSwitches *switches) {
     switch (state) {
       case 0:
         std::cout << "\n\nDEMO: Headlights" << std::endl;
-        switches->SetHeadlights(true);
+        electronics->SetHeadLights(true);
         state++;
         break;
       case 1:
         std::cout << "\n\nDEMO: Headlights and brake lights" << std::endl;
-        switches->SetBrakeLights(true);
+        electronics->SetBrakeLights(true);
         state++;
         break;
       case 2:
         std::cout << "\n\nDEMO: Headlights, left indicators" << std::endl;
-        switches->SetBrakeLights(false);
-        switches->SetLeftIndicator(true);
+        electronics->SetBrakeLights(false);
+        electronics->SetLeftIndicator(true);
         state++;
         break;
       case 3:
         std::cout << "\n\nDEMO: Headlights, right indicators" << std::endl;
-        switches->SetLeftIndicator(false);
-        switches->SetRightIndicator(true);
+        electronics->SetLeftIndicator(false);
+        electronics->SetRightIndicator(true);
         state++;
         break;
       case 4:
         std::cout << "\n\nDEMO: Headlights, hazard" << std::endl;
-        switches->SetHazardLights(true);
+        electronics->SetHazardLights(true);
         state++;
         break;
       case 5:
         std::cout << "\n\nDEMO: Right indicators" << std::endl;
-        switches->SetHazardLights(false);
-        switches->SetHeadlights(false);
+        electronics->SetHazardLights(false);
+        electronics->SetHeadLights(false);
         state++;
         break;
       case 6:
         std::cout << "\n\nDEMO: reversing" << std::endl;
-        switches->SetRightIndicator(false);
-        switches->SetReversingLights(true);
+        electronics->SetRightIndicator(false);
+        electronics->SetReversingLights(true);
         state++;
         break;
       case 7:
         std::cout << "\n\nDEMO: sides on" << std::endl;
-        switches->SetReversingLights(false);
-        switches->SetSideLights(true);
+        electronics->SetReversingLights(false);
+        electronics->SetSideLights(true);
         state++;
         break;
       case 8:
         std::cout << "\n\nDEMO: All off" << std::endl;
-        switches->SetSideLights(false);
+        electronics->SetSideLights(false);
         state++;
         break;
 
@@ -72,12 +72,12 @@ void demo_features(LightSwitches *switches) {
 int main() {
   using namespace std::this_thread;      // sleep_for, sleep_until
   using namespace std::chrono_literals;  // ns, us, ms, s, h, etc.
-  LightSwitches switches;
+  Electronics electronics;
 
   // Main loop
   while (true) {
-    demo_features(&switches);
-    switches.UpdateLights();
+    demo_features(&electronics);
+    electronics.Update();
     sleep_for(100ms);
   }
 }

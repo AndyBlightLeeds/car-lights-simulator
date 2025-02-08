@@ -43,21 +43,21 @@ void Electronics::SetSideLights(bool on) {
 }
 
 void Electronics::SetLeftIndicator(bool on) {
-  std::cout << __func__ << "on: " << on << std::endl;
+  std::cout << __func__ << " on: " << on << std::endl;
   // May have to protect this variable in a multithreaded environment.
   new_blink_ = true;
   left_indicator_on_ = on;
 }
 
 void Electronics::SetRightIndicator(bool on) {
-  std::cout << __func__ << "on: " << on << std::endl;
+  std::cout << __func__ << " on: " << on << std::endl;
   // May have to protect this variable in a multithreaded environment.
   new_blink_ = true;
   right_indicator_on_ = on;
 }
 
 void Electronics::SetHazardLights(bool on) {
-  std::cout << __func__ << "on: " << on << std::endl;
+  std::cout << __func__ << " on: " << on << std::endl;
   new_blink_ = true;
   hazard_lights_on_ = on;
 }
@@ -136,7 +136,7 @@ void Electronics::EvaluateIndicators(bool blink_on) {
       right_on = right_indicator_on_;
     }
   }
-  std::cout << "Elec. Eval. LRH: " << left_indicator_on_ << right_indicator_on_
+  std::cout << "Elec. Eval. LRZ: " << left_indicator_on_ << right_indicator_on_
             << hazard_lights_on_ << " On LR: " << left_on << right_on << std::endl;
   leds_.SetLeftIndicatorCluster(left_on);
   leds_.SetRightIndicatorCluster(right_on);
