@@ -4,6 +4,10 @@
 #include <iostream>
 #include <thread>
 
+#include "neopixels.hpp"
+
+// Add business logic here
+
 Leds::Leds()
     : headlights_on_(false),
       brake_lights_on_(false),
@@ -13,7 +17,7 @@ Leds::Leds()
       right_indicator_on_(false),
       new_blink_(true) {}
 
-void Leds::Init() {}
+void Leds::Init() { neopixels_.Init(); }
 void Leds::SetHeadLights(bool on) { headlights_on_ = on; }
 void Leds::SetTailLights(bool on) { brake_lights_on_ = on; }
 void Leds::SetReversingLights(bool on) {reversing_lights_on_ = on; }
@@ -43,6 +47,7 @@ void Leds::Update() {
   std::cout << "Right[" << (right_indicator_on_ && blink_state ? "ON" : "OFF")
             << "] ";
   std::cout << std::endl;
+  neopixels_.Update();
 }
 
 // Private

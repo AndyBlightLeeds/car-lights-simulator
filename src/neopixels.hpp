@@ -1,10 +1,12 @@
 #pragma once
 
-#include "neopixels.hpp"
+#include <chrono>
+#include <iostream>
+#include <thread>
 
-class Leds {
+class NeoPixels {
  public:
-  Leds();
+  NeoPixels();
   void Init();
   void SetHeadLights(bool on);
   void SetTailLights(bool on);
@@ -15,18 +17,18 @@ class Leds {
   void Update();
 
  private:
-  bool GetBlinkState();
-  // High level state variables (like physical switches on a car).
+  // Colours
+  enum Colour { RED, GREEN, BLUE, WHITE, ORANGE };
+  const char *ColourToChar(Colour colour);
+  // NeoPixel simulated LEDs
+  // There are two strips of 8 LEDs each in series.
+  // LEDS 0-7 are at the back of the car, 8 to 15 are at the front.
+  Colour leds_[16];
+  // Fake LEDS values for printing state of LEDS.
   bool headlights_on_;
   bool brake_lights_on_;
   bool reversing_lights_on_;
   bool side_lights_on_;
   bool left_indicator_on_;
   bool right_indicator_on_;
-  bool hazard_lights_on_;
-  // Internal states.
-  // May need to protect this variable in a multithreaded environment.
-  bool new_blink_;
-  // Low level implementation based on the Neopixels class.
-  NeoPixels neopixels_;
 };
