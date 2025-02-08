@@ -30,7 +30,7 @@ void NeoPixels::Update() {
             << ColourToChar(leds_[14]) << ColourToChar(leds_[13])
             << ColourToChar(leds_[12]) << ColourToChar(leds_[11])
             << ColourToChar(leds_[10]) << ColourToChar(leds_[9])
-            << ColourToChar(leds_[8]) << "      " << ColourToChar(leds_[0])
+            << ColourToChar(leds_[8]) << "       " << ColourToChar(leds_[0])
             << ColourToChar(leds_[1]) << ColourToChar(leds_[2])
             << ColourToChar(leds_[3]) << ColourToChar(leds_[4])
             << ColourToChar(leds_[5]) << ColourToChar(leds_[6])

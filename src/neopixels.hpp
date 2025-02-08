@@ -4,6 +4,8 @@
 #include <iostream>
 #include <thread>
 
+#define NUM_LEDS (16)
+
 class NeoPixels {
  public:
   NeoPixels();
@@ -18,12 +20,12 @@ class NeoPixels {
 
  private:
   // Colours
-  enum Colour { RED, GREEN, BLUE, WHITE, ORANGE };
+  enum Colour { OFF, RED, GREEN, BLUE, WHITE, ORANGE };
   const char *ColourToChar(Colour colour);
   // NeoPixel simulated LEDs
   // There are two strips of 8 LEDs each in series.
   // LEDS 0-7 are at the back of the car, 8 to 15 are at the front.
-  Colour leds_[16];
+  Colour leds_[NUM_LEDS];
   // Fake LEDS values for printing state of LEDS.
   bool headlights_on_;
   bool brake_lights_on_;

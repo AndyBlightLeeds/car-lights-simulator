@@ -38,13 +38,13 @@ void Leds::SetRightIndicator(bool on) {
 void Leds::Update() {
   bool blink_state = GetBlinkState();
   std::cout << "Lights Status: ";
-  std::cout << "Headlights[" << (headlights_on_ ? "ON" : "OFF") << "] ";
-  std::cout << "Brake[" << (brake_lights_on_ ? "ON" : "OFF") << "] ";
-  std::cout << "Reversing[" << (reversing_lights_on_ ? "ON" : "OFF") << "] ";
-  std::cout << "Side[" << (side_lights_on_ ? "ON" : "OFF") << "] ";
-  std::cout << "Left[" << (left_indicator_on_ && blink_state ? "ON" : "OFF")
+  std::cout << "H[" << (headlights_on_ ? "ON " : "OFF") << "] ";
+  std::cout << "B[" << (brake_lights_on_ ? "ON " : "OFF") << "] ";
+  std::cout << "R[" << (reversing_lights_on_ ? "ON " : "OFF") << "] ";
+  std::cout << "S[" << (side_lights_on_ ? "ON " : "OFF") << "] ";
+  std::cout << "L[" << (left_indicator_on_ && blink_state ? "ON " : "OFF")
             << "] ";
-  std::cout << "Right[" << (right_indicator_on_ && blink_state ? "ON" : "OFF")
+  std::cout << "R[" << (right_indicator_on_ && blink_state ? "ON " : "OFF")
             << "] ";
   std::cout << std::endl;
   neopixels_.Update();
