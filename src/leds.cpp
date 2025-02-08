@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <iostream>
+#include <string>
 #include <thread>
 
 LEDs::LEDs()
@@ -37,7 +38,7 @@ void LEDs::SetBrakeLights(bool on) {
   Colour colour = on ? RED : OFF;
   FillRange(0, 1, colour);
   FillRange(6, 7, colour);
-  PrintLEDStates();
+  PrintLEDStates(__func__);
 }
 
 void LEDs::SetReversingLights(bool on) {
@@ -59,14 +60,14 @@ void LEDs::SetLeftIndicator(bool on) {
   left_indicator_on_ = on;
   FillRange(0, 1, on ? ORANGE : OFF);
   FillRange(14, 15, on ? ORANGE : OFF);
-  PrintLEDStates();
+  PrintLEDStates(__func__);
 }
 
 void LEDs::SetRightIndicator(bool on) {
   right_indicator_on_ = on;
   FillRange(6, 7, on ? ORANGE : OFF);
   FillRange(8, 9, on ? ORANGE : OFF);
-  PrintLEDStates();
+  PrintLEDStates(__func__);
 }
 
 void LEDs::Update() {
@@ -95,8 +96,12 @@ const char *LEDs::ColourToChar(Colour colour) {
   }
 }
 
-void LEDs::PrintLEDStates() {
-  std::cout << "            " << ColourToChar(pixels_[15])
+void LEDs::PrintLEDStates(const char* func_name) {
+  std::string func_str("???????????");
+  if (func_name != nullptr) {
+    func_str = func_name;
+  }
+  std::cout << func_str.substr(0, 10) << ": " << ColourToChar(pixels_[15])
             << ColourToChar(pixels_[14]) << ColourToChar(pixels_[13])
             << ColourToChar(pixels_[12]) << ColourToChar(pixels_[11])
             << ColourToChar(pixels_[10]) << ColourToChar(pixels_[9])
