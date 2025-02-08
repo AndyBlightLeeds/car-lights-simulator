@@ -1,10 +1,10 @@
 #pragma once
 
-#include "leds.hpp"
+#include "electronics.hpp"
 
-class CarLights {
+class LightSwitches {
  public:
-  CarLights();
+  LightSwitches();
   void SetHeadlights(bool on);
   void SetBrakeLights(bool on);
   void SetReversingLights(bool on);
@@ -17,7 +17,7 @@ class CarLights {
 
  private:
   // All of the leds on the car.
-  Leds leds_;
+  Electronics electronics_;
   // High level logic for the indicators and hazard lights.
   bool left_indicator_on_;
   bool right_indicator_on_;

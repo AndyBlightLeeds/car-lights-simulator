@@ -1,49 +1,49 @@
-#include "car_lights.hpp"
+#include "light_switches.hpp"
 
 #include <chrono>
 #include <iostream>
 #include <thread>
 
-#include "leds.hpp"
+#include "electronics.hpp"
 
-CarLights::CarLights()
+LightSwitches::LightSwitches()
     : left_indicator_on_(false),
       right_indicator_on_(false),
       hazard_lights_on_(false),
       previous_left_indicator_(false),
       previous_right_indicator_(false) {}
 
-void CarLights::SetHeadlights(bool on) { leds_.SetHeadLights(on); }
+void LightSwitches::SetHeadlights(bool on) { electronics_.SetHeadLights(on); }
 
-void CarLights::SetBrakeLights(bool on) { leds_.SetTailLights(on); }
+void LightSwitches::SetBrakeLights(bool on) { electronics_.SetTailLights(on); }
 
-void CarLights::SetReversingLights(bool on) { leds_.SetReversingLights(on); }
+void LightSwitches::SetReversingLights(bool on) { electronics_.SetReversingLights(on); }
 
-void CarLights::SetSideLights(bool on) { leds_.SetSideLights(on); }
+void LightSwitches::SetSideLights(bool on) { electronics_.SetSideLights(on); }
 
-void CarLights::SetLeftIndicator(bool on) {
+void LightSwitches::SetLeftIndicator(bool on) {
   if (on) {
     left_indicator_on_ = true;
   } else {
     left_indicator_on_ = false;
   }
   if (!hazard_lights_on_) {
-    leds_.SetLeftIndicator(left_indicator_on_);
+    electronics_.SetLeftIndicator(left_indicator_on_);
   }
 }
 
-void CarLights::SetRightIndicator(bool on) {
+void LightSwitches::SetRightIndicator(bool on) {
   if (on) {
     right_indicator_on_ = true;
   } else {
     right_indicator_on_ = false;
   }
   if (!hazard_lights_on_) {
-    leds_.SetRightIndicator(right_indicator_on_);
+    electronics_.SetRightIndicator(right_indicator_on_);
   }
 }
 
-void CarLights::SetHazardLights(bool on) {
+void LightSwitches::SetHazardLights(bool on) {
   if (on) {
     // Store current indicator states
     previous_left_indicator_ = left_indicator_on_;
@@ -51,15 +51,15 @@ void CarLights::SetHazardLights(bool on) {
 
     // Activate hazard lights
     hazard_lights_on_ = true;
-    leds_.SetLeftIndicator(true);
-    leds_.SetRightIndicator(true);
+    electronics_.SetLeftIndicator(true);
+    electronics_.SetRightIndicator(true);
   } else {
     // Restore previous indicator states
     hazard_lights_on_ = false;
-    leds_.SetLeftIndicator(previous_left_indicator_);
-    leds_.SetRightIndicator(previous_right_indicator_);
+    electronics_.SetLeftIndicator(previous_left_indicator_);
+    electronics_.SetRightIndicator(previous_right_indicator_);
   }
 }
 
 // Call at least every 100ms to update the blink state.
-void CarLights::UpdateLights() { leds_.Update(); }
+void LightSwitches::UpdateLights() { electronics_.Update(); }

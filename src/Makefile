@@ -3,7 +3,7 @@ OBJECTS=$(SOURCES:.cpp=.o)
 DEPS=$(SOURCES:.cpp=.d)
 BINS=$(SOURCES:.cpp=)
 
-SIM_SRCS = car_lights_sim.cpp car_lights.cpp leds.cpp neopixels.cpp
+SIM_SRCS = car_lights_sim.cpp light_switches.cpp electronics.cpp leds.cpp
 
 CXXFLAGS+=-MMD -Wall -std=c++17
 LDLIBS+=-lgtest -lgtest_main -pthread

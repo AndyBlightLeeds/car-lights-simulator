@@ -1,14 +1,14 @@
-#include "leds.hpp"
+#include "electronics.hpp"
 
 #include <chrono>
 #include <iostream>
 #include <thread>
 
-#include "neopixels.hpp"
+#include "leds.hpp"
 
 // Add business logic here
 
-Leds::Leds()
+Electronics::Electronics()
     : headlights_on_(false),
       brake_lights_on_(false),
       reversing_lights_on_(false),
@@ -17,61 +17,61 @@ Leds::Leds()
       right_indicator_on_(false),
       new_blink_(true) {}
 
-void Leds::Init() { neopixels_.Init(); }
-void Leds::SetHeadLights(bool on) {
+void Electronics::Init() { leds_.Init(); }
+void Electronics::SetHeadLights(bool on) {
   headlights_on_ = on;
-  neopixels_.SetHeadLights(on);
+  leds_.SetHeadLights(on);
 }
-void Leds::SetTailLights(bool on) {
+void Electronics::SetTailLights(bool on) {
   brake_lights_on_ = on;
-  neopixels_.SetTailLights(on);
+  leds_.SetTailLights(on);
 }
-void Leds::SetReversingLights(bool on) {
+void Electronics::SetReversingLights(bool on) {
   reversing_lights_on_ = on;
-  neopixels_.SetReversingLights(on);
+  leds_.SetReversingLights(on);
 }
 
-void Leds::SetSideLights(bool on) {
+void Electronics::SetSideLights(bool on) {
   side_lights_on_ = on;
-  neopixels_.SetSideLights(on);
+  leds_.SetSideLights(on);
 }
 
-void Leds::SetLeftIndicator(bool on) {
+void Electronics::SetLeftIndicator(bool on) {
   // May have to protect this variable in a multithreaded environment.
   new_blink_ = true;
   left_indicator_on_ = on;
   if (!hazard_lights_on_) {
-    neopixels_.SetLeftIndicator(left_indicator_on_);
+    leds_.SetLeftIndicator(left_indicator_on_);
   }
 }
 
-void Leds::SetRightIndicator(bool on) {
+void Electronics::SetRightIndicator(bool on) {
   // May have to protect this variable in a multithreaded environment.
   new_blink_ = true;
   right_indicator_on_ = on;
   if (!hazard_lights_on_) {
-    neopixels_.SetRightIndicator(right_indicator_on_);
+    leds_.SetRightIndicator(right_indicator_on_);
   }
 }
 
-void Leds::SetHazardLights(bool on) {
+void Electronics::SetHazardLights(bool on) {
   if (on) {
     // Store current indicator states
     previous_left_indicator_ = left_indicator_on_;
     previous_right_indicator_ = right_indicator_on_;
     // Activate hazard lights
     hazard_lights_on_ = true;
-    neopixels_.SetLeftIndicator(true);
-    neopixels_.SetRightIndicator(true);
+    leds_.SetLeftIndicator(true);
+    leds_.SetRightIndicator(true);
   } else {
     // Restore previous indicator states
     hazard_lights_on_ = false;
-    neopixels_.SetLeftIndicator(previous_left_indicator_);
-    neopixels_.SetRightIndicator(previous_right_indicator_);
+    leds_.SetLeftIndicator(previous_left_indicator_);
+    leds_.SetRightIndicator(previous_right_indicator_);
   }
 }
 
-void Leds::Update() {
+void Electronics::Update() {
   bool blink_state = GetBlinkState();
   std::cout << "Lights Status: ";
   std::cout << "H[" << (headlights_on_ ? "ON " : "OFF") << "] ";
@@ -83,15 +83,15 @@ void Leds::Update() {
   std::cout << "R[" << (right_indicator_on_ && blink_state ? "ON " : "OFF")
             << "] ";
   std::cout << std::endl;
-  neopixels_.Update();
+  leds_.Update();
 }
 
 // Private
 
-bool Leds::GetBlinkState() {
+bool Electronics::GetBlinkState() {
   static auto last_blink = std::chrono::steady_clock::now();
   static bool blink_state = false;
-  // Start with the LEDs on for 500ms.
+  // Start with the Electronics on for 500ms.
   if (new_blink_) {
     last_blink = std::chrono::steady_clock::now();
     blink_state = true;

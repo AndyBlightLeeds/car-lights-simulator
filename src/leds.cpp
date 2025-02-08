@@ -1,10 +1,10 @@
-#include "neopixels.hpp"
+#include "leds.hpp"
 
 #include <chrono>
 #include <iostream>
 #include <thread>
 
-NeoPixels::NeoPixels()
+LEDs::LEDs()
     : headlights_on_(false),
       brake_lights_on_(false),
       reversing_lights_on_(false),
@@ -16,7 +16,7 @@ NeoPixels::NeoPixels()
     leds_[i] = OFF;
   }
 }
-void NeoPixels::Init() { std::cout << "Init called" << std::endl; }
+void LEDs::Init() { std::cout << "Init called" << std::endl; }
 
 // There are two strips of 8 LEDs each in series.
 // LEDS 0-7 are at the back of the car, 8 to 15 are at the front.
@@ -27,12 +27,12 @@ void NeoPixels::Init() { std::cout << "Init called" << std::endl; }
 // Reversing lights are LEDs 2, 3, 4, 5.
 // Side lights are LEDs 0, 7, 8, 15.
 
-void NeoPixels::SetHeadLights(bool on) {
+void LEDs::SetHeadLights(bool on) {
   headlights_on_ = on;
   FillRange(8, 15, on ? WHITE : OFF);
 }
 
-void NeoPixels::SetTailLights(bool on) {
+void LEDs::SetTailLights(bool on) {
   brake_lights_on_ = on;
   leds_[0] = on ? RED : OFF;
   leds_[1] = on ? RED : OFF;
@@ -40,12 +40,12 @@ void NeoPixels::SetTailLights(bool on) {
   leds_[7] = on ? RED : OFF;
 }
 
-void NeoPixels::SetReversingLights(bool on) {
+void LEDs::SetReversingLights(bool on) {
   reversing_lights_on_ = on;
   FillRange(2, 5, on ? WHITE : OFF);
 }
 
-void NeoPixels::SetSideLights(bool on) {
+void LEDs::SetSideLights(bool on) {
   side_lights_on_ = on;
   leds_[0] = on ? RED : OFF;
   leds_[7] = on ? RED : OFF;
@@ -53,20 +53,20 @@ void NeoPixels::SetSideLights(bool on) {
   leds_[15] = on ? WHITE : OFF;
 }
 
-void NeoPixels::SetLeftIndicator(bool on) {
+void LEDs::SetLeftIndicator(bool on) {
   left_indicator_on_ = on;
   FillRange(0, 1, on ? ORANGE : OFF);
   FillRange(14, 15, on ? ORANGE : OFF);
 }
 
-void NeoPixels::SetRightIndicator(bool on) {
+void LEDs::SetRightIndicator(bool on) {
   right_indicator_on_ = on;
   FillRange(6, 7, on ? ORANGE : OFF);
   FillRange(8, 9, on ? ORANGE : OFF);
 }
 
-void NeoPixels::Update() {
-  std::cout << "NeoPixels: Front 54321098  Rear 01234567" << std::endl;
+void LEDs::Update() {
+  std::cout << "LEDs: Front 54321098  Rear 01234567" << std::endl;
   std::cout << "                 " << ColourToChar(leds_[15])
             << ColourToChar(leds_[14]) << ColourToChar(leds_[13])
             << ColourToChar(leds_[12]) << ColourToChar(leds_[11])
@@ -80,7 +80,7 @@ void NeoPixels::Update() {
 
 /**** Private */
 
-const char *NeoPixels::ColourToChar(Colour colour) {
+const char *LEDs::ColourToChar(Colour colour) {
   switch (colour) {
     case OFF:
       return "-";
@@ -99,7 +99,7 @@ const char *NeoPixels::ColourToChar(Colour colour) {
   }
 }
 
-void NeoPixels::FillRange(size_t start, size_t end, Colour colour) {
+void LEDs::FillRange(size_t start, size_t end, Colour colour) {
   for (size_t i = start; i <= end; i++) {
     leds_[i] = colour;
   }

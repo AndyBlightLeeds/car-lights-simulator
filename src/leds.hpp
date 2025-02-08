@@ -6,9 +6,9 @@
 
 #define NUM_LEDS (16)
 
-class NeoPixels {
+class LEDs {
  public:
-  NeoPixels();
+  LEDs();
   void Init();
   void SetHeadLights(bool on);
   void SetTailLights(bool on);

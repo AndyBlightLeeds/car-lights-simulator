@@ -1,10 +1,10 @@
 #pragma once
 
-#include "neopixels.hpp"
+#include "leds.hpp"
 
-class Leds {
+class Electronics {
  public:
-  Leds();
+  Electronics();
   void Init();
   void SetHeadLights(bool on);
   void SetTailLights(bool on);
@@ -32,6 +32,6 @@ class Leds {
   bool previous_left_indicator_;
   bool previous_right_indicator_;
 
-  // Low level implementation based on the Neopixels class.
-  NeoPixels neopixels_;
+  // Low level implementation.
+  LEDs leds_;
 };
