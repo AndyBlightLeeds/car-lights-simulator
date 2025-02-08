@@ -2,7 +2,7 @@
 
 Simulate controlling the lights on a car.
 
-Written with help from [Claude.ai](https://claude.ai/).
+[Claude.ai](https://claude.ai/) gave me the original code including the test harness code.  Since that stage, the code has been almost completely rewritten, test code excepted.
 
 The lights that can be controlled are:
 
