@@ -12,6 +12,7 @@ class Leds {
   void SetSideLights(bool on);
   void SetLeftIndicator(bool on);
   void SetRightIndicator(bool on);
+  void SetHazardLights(bool on);
   void Update();
 
  private:
@@ -27,6 +28,10 @@ class Leds {
   // Internal states.
   // May need to protect this variable in a multithreaded environment.
   bool new_blink_;
+  // Store previous indicator states when hazards are activated
+  bool previous_left_indicator_;
+  bool previous_right_indicator_;
+
   // Low level implementation based on the Neopixels class.
   NeoPixels neopixels_;
 };

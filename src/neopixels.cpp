@@ -17,12 +17,53 @@ NeoPixels::NeoPixels()
   }
 }
 void NeoPixels::Init() { std::cout << "Init called" << std::endl; }
-void NeoPixels::SetHeadLights(bool on) { headlights_on_ = on; }
-void NeoPixels::SetTailLights(bool on) { brake_lights_on_ = on; }
-void NeoPixels::SetReversingLights(bool on) { reversing_lights_on_ = on; }
-void NeoPixels::SetSideLights(bool on) { side_lights_on_ = on; }
-void NeoPixels::SetLeftIndicator(bool on) { left_indicator_on_ = on; }
-void NeoPixels::SetRightIndicator(bool on) { right_indicator_on_ = on; }
+
+// There are two strips of 8 LEDs each in series.
+// LEDS 0-7 are at the back of the car, 8 to 15 are at the front.
+// Left indicators are LEDs 0, 1, 14, 15
+// Right indicators are LEDs 6, 7, 8, 9.
+// Headlights are LEDs 8 to 15.
+// Tail lights are LEDs 0, 1, 6, 7.
+// Reversing lights are LEDs 2, 3, 4, 5.
+// Side lights are LEDs 0, 7, 8, 15.
+
+void NeoPixels::SetHeadLights(bool on) {
+  headlights_on_ = on;
+  FillRange(8, 15, on ? WHITE : OFF);
+}
+
+void NeoPixels::SetTailLights(bool on) {
+  brake_lights_on_ = on;
+  leds_[0] = on ? RED : OFF;
+  leds_[1] = on ? RED : OFF;
+  leds_[6] = on ? RED : OFF;
+  leds_[7] = on ? RED : OFF;
+}
+
+void NeoPixels::SetReversingLights(bool on) {
+  reversing_lights_on_ = on;
+  FillRange(2, 5, on ? WHITE : OFF);
+}
+
+void NeoPixels::SetSideLights(bool on) {
+  side_lights_on_ = on;
+  leds_[0] = on ? RED : OFF;
+  leds_[7] = on ? RED : OFF;
+  leds_[8] = on ? WHITE : OFF;
+  leds_[15] = on ? WHITE : OFF;
+}
+
+void NeoPixels::SetLeftIndicator(bool on) {
+  left_indicator_on_ = on;
+  FillRange(0, 1, on ? ORANGE : OFF);
+  FillRange(14, 15, on ? ORANGE : OFF);
+}
+
+void NeoPixels::SetRightIndicator(bool on) {
+  right_indicator_on_ = on;
+  FillRange(6, 7, on ? ORANGE : OFF);
+  FillRange(8, 9, on ? ORANGE : OFF);
+}
 
 void NeoPixels::Update() {
   std::cout << "NeoPixels: Front 54321098  Rear 01234567" << std::endl;
@@ -36,6 +77,8 @@ void NeoPixels::Update() {
             << ColourToChar(leds_[5]) << ColourToChar(leds_[6])
             << ColourToChar(leds_[7]) << std::endl;
 }
+
+/**** Private */
 
 const char *NeoPixels::ColourToChar(Colour colour) {
   switch (colour) {
@@ -53,5 +96,11 @@ const char *NeoPixels::ColourToChar(Colour colour) {
       return "O";
     default:
       return "UNKNOWN";
+  }
+}
+
+void NeoPixels::FillRange(size_t start, size_t end, Colour colour) {
+  for (size_t i = start; i <= end; i++) {
+    leds_[i] = colour;
   }
 }

@@ -22,9 +22,8 @@ class NeoPixels {
   // Colours
   enum Colour { OFF, RED, GREEN, BLUE, WHITE, ORANGE };
   const char *ColourToChar(Colour colour);
+  void FillRange(size_t start, size_t end, Colour colour);
   // NeoPixel simulated LEDs
-  // There are two strips of 8 LEDs each in series.
-  // LEDS 0-7 are at the back of the car, 8 to 15 are at the front.
   Colour leds_[NUM_LEDS];
   // Fake LEDS values for printing state of LEDS.
   bool headlights_on_;

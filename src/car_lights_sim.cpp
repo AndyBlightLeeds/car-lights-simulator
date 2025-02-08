@@ -56,7 +56,7 @@ void demo_features(CarLights *car) {
         state++;
         break;
       case 8:
-        car->SetSideLights(true);
+        car->SetSideLights(false);
         std::cout << "\n\nDEMO: All off" << std::endl;
         state++;
         break;
