@@ -12,7 +12,6 @@ class Electronics {
   void SetSideLights(bool on);
   void SetLeftIndicator(bool on);
   void SetRightIndicator(bool on);
-  void SetHazardLights(bool on);
   void Update();
 
  private:
@@ -24,13 +23,9 @@ class Electronics {
   bool side_lights_on_;
   bool left_indicator_on_;
   bool right_indicator_on_;
-  bool hazard_lights_on_;
   // Internal states.
   // May need to protect this variable in a multithreaded environment.
   bool new_blink_;
-  // Store previous indicator states when hazards are activated
-  bool previous_left_indicator_;
-  bool previous_right_indicator_;
 
   // Low level implementation.
   LEDs leds_;

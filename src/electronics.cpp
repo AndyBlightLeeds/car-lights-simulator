@@ -18,6 +18,7 @@ Electronics::Electronics()
       new_blink_(true) {}
 
 void Electronics::Init() { leds_.Init(); }
+
 void Electronics::SetHeadLights(bool on) {
   headlights_on_ = on;
   leds_.SetHeadLights(on);
@@ -40,40 +41,17 @@ void Electronics::SetLeftIndicator(bool on) {
   // May have to protect this variable in a multithreaded environment.
   new_blink_ = true;
   left_indicator_on_ = on;
-  if (!hazard_lights_on_) {
-    leds_.SetLeftIndicator(left_indicator_on_);
-  }
 }
 
 void Electronics::SetRightIndicator(bool on) {
   // May have to protect this variable in a multithreaded environment.
   new_blink_ = true;
   right_indicator_on_ = on;
-  if (!hazard_lights_on_) {
-    leds_.SetRightIndicator(right_indicator_on_);
-  }
-}
-
-void Electronics::SetHazardLights(bool on) {
-  if (on) {
-    // Store current indicator states
-    previous_left_indicator_ = left_indicator_on_;
-    previous_right_indicator_ = right_indicator_on_;
-    // Activate hazard lights
-    hazard_lights_on_ = true;
-    leds_.SetLeftIndicator(true);
-    leds_.SetRightIndicator(true);
-  } else {
-    // Restore previous indicator states
-    hazard_lights_on_ = false;
-    leds_.SetLeftIndicator(previous_left_indicator_);
-    leds_.SetRightIndicator(previous_right_indicator_);
-  }
 }
 
 void Electronics::Update() {
   bool blink_state = GetBlinkState();
-  std::cout << "Lights Status: ";
+  std::cout << "Electronics: ";
   std::cout << "H[" << (headlights_on_ ? "ON " : "OFF") << "] ";
   std::cout << "B[" << (brake_lights_on_ ? "ON " : "OFF") << "] ";
   std::cout << "R[" << (reversing_lights_on_ ? "ON " : "OFF") << "] ";
@@ -83,11 +61,15 @@ void Electronics::Update() {
   std::cout << "R[" << (right_indicator_on_ && blink_state ? "ON " : "OFF")
             << "] ";
   std::cout << std::endl;
+  // Update the blink state of the LEDs that need to flash.
+  leds_.SetLeftIndicator(left_indicator_on_ && blink_state);
+  leds_.SetRightIndicator(right_indicator_on_ && blink_state);
   leds_.Update();
 }
 
 // Private
 
+// Simulates the flasher unit in a car.
 bool Electronics::GetBlinkState() {
   static auto last_blink = std::chrono::steady_clock::now();
   static bool blink_state = false;
