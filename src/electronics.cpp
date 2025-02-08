@@ -23,10 +23,12 @@ void Electronics::SetHeadLights(bool on) {
   headlights_on_ = on;
   leds_.SetHeadLights(on);
 }
-void Electronics::SetTailLights(bool on) {
+
+void Electronics::SetBrakeLights(bool on) {
   brake_lights_on_ = on;
-  leds_.SetTailLights(on);
+  leds_.SetBrakeLights(on);
 }
+
 void Electronics::SetReversingLights(bool on) {
   reversing_lights_on_ = on;
   leds_.SetReversingLights(on);

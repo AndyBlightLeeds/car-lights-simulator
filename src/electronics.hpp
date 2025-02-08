@@ -7,7 +7,7 @@ class Electronics {
   Electronics();
   void Init();
   void SetHeadLights(bool on);
-  void SetTailLights(bool on);
+  void SetBrakeLights(bool on);
   void SetReversingLights(bool on);
   void SetSideLights(bool on);
   void SetLeftIndicator(bool on);

@@ -4,14 +4,14 @@
 #include <iostream>
 #include <thread>
 
-#define NUM_LEDS (16)
+#define NUM_PIXELS (16)
 
 class LEDs {
  public:
   LEDs();
   void Init();
   void SetHeadLights(bool on);
-  void SetTailLights(bool on);
+  void SetBrakeLights(bool on);
   void SetReversingLights(bool on);
   void SetSideLights(bool on);
   void SetLeftIndicator(bool on);
@@ -23,8 +23,8 @@ class LEDs {
   enum Colour { OFF, RED, GREEN, BLUE, WHITE, ORANGE };
   const char *ColourToChar(Colour colour);
   void FillRange(size_t start, size_t end, Colour colour);
-  // NeoPixel simulated LEDs
-  Colour leds_[NUM_LEDS];
+  // Pixels actually do the lighting up of the LEDs.
+  Colour pixels_[NUM_PIXELS];
   // Fake LEDS values for printing state of LEDS.
   bool headlights_on_;
   bool brake_lights_on_;

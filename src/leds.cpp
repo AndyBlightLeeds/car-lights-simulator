@@ -12,8 +12,8 @@ LEDs::LEDs()
       left_indicator_on_(false),
       right_indicator_on_(false) {
   std::cout << "Constructor called" << std::endl;
-  for (size_t i = 0; i < NUM_LEDS; i++) {
-    leds_[i] = OFF;
+  for (size_t i = 0; i < NUM_PIXELS; i++) {
+    pixels_[i] = OFF;
   }
 }
 void LEDs::Init() { std::cout << "Init called" << std::endl; }
@@ -32,12 +32,18 @@ void LEDs::SetHeadLights(bool on) {
   FillRange(8, 15, on ? WHITE : OFF);
 }
 
-void LEDs::SetTailLights(bool on) {
+void LEDs::SetBrakeLights(bool on) {
   brake_lights_on_ = on;
-  leds_[0] = on ? RED : OFF;
-  leds_[1] = on ? RED : OFF;
-  leds_[6] = on ? RED : OFF;
-  leds_[7] = on ? RED : OFF;
+  Colour colour = on ? RED : OFF;
+  FillRange(0, 1, colour);
+  FillRange(6, 7, colour);
+  // pixels_[0] = colour;
+  // pixels_[1] = colour;
+  // pixels_[6] = colour;
+  // pixels_[7] = colour;
+  std::cout << "Brake Lights: " << on << " Colour: " << colour
+            << " LEDs: " << pixels_[0] << pixels_[1] << pixels_[6] << pixels_[7]
+            << std::endl;
 }
 
 void LEDs::SetReversingLights(bool on) {
@@ -47,10 +53,10 @@ void LEDs::SetReversingLights(bool on) {
 
 void LEDs::SetSideLights(bool on) {
   side_lights_on_ = on;
-  leds_[0] = on ? RED : OFF;
-  leds_[7] = on ? RED : OFF;
-  leds_[8] = on ? WHITE : OFF;
-  leds_[15] = on ? WHITE : OFF;
+  pixels_[0] = on ? RED : OFF;
+  pixels_[7] = on ? RED : OFF;
+  pixels_[8] = on ? WHITE : OFF;
+  pixels_[15] = on ? WHITE : OFF;
 }
 
 void LEDs::SetLeftIndicator(bool on) {
@@ -67,15 +73,15 @@ void LEDs::SetRightIndicator(bool on) {
 
 void LEDs::Update() {
   std::cout << "LEDs: Front 54321098  Rear 01234567" << std::endl;
-  std::cout << "                 " << ColourToChar(leds_[15])
-            << ColourToChar(leds_[14]) << ColourToChar(leds_[13])
-            << ColourToChar(leds_[12]) << ColourToChar(leds_[11])
-            << ColourToChar(leds_[10]) << ColourToChar(leds_[9])
-            << ColourToChar(leds_[8]) << "       " << ColourToChar(leds_[0])
-            << ColourToChar(leds_[1]) << ColourToChar(leds_[2])
-            << ColourToChar(leds_[3]) << ColourToChar(leds_[4])
-            << ColourToChar(leds_[5]) << ColourToChar(leds_[6])
-            << ColourToChar(leds_[7]) << std::endl;
+  std::cout << "            " << ColourToChar(pixels_[15])
+            << ColourToChar(pixels_[14]) << ColourToChar(pixels_[13])
+            << ColourToChar(pixels_[12]) << ColourToChar(pixels_[11])
+            << ColourToChar(pixels_[10]) << ColourToChar(pixels_[9])
+            << ColourToChar(pixels_[8]) << "       " << ColourToChar(pixels_[0])
+            << ColourToChar(pixels_[1]) << ColourToChar(pixels_[2])
+            << ColourToChar(pixels_[3]) << ColourToChar(pixels_[4])
+            << ColourToChar(pixels_[5]) << ColourToChar(pixels_[6])
+            << ColourToChar(pixels_[7]) << std::endl;
 }
 
 /**** Private */
@@ -101,6 +107,6 @@ const char *LEDs::ColourToChar(Colour colour) {
 
 void LEDs::FillRange(size_t start, size_t end, Colour colour) {
   for (size_t i = start; i <= end; i++) {
-    leds_[i] = colour;
+    pixels_[i] = colour;
   }
 }

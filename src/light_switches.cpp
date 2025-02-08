@@ -15,7 +15,7 @@ LightSwitches::LightSwitches()
 
 void LightSwitches::SetHeadlights(bool on) { electronics_.SetHeadLights(on); }
 
-void LightSwitches::SetBrakeLights(bool on) { electronics_.SetTailLights(on); }
+void LightSwitches::SetBrakeLights(bool on) { electronics_.SetBrakeLights(on); }
 
 void LightSwitches::SetReversingLights(bool on) { electronics_.SetReversingLights(on); }
 
