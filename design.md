@@ -2,12 +2,14 @@
 
 ## Abstraction layers
 
-There are 4 layers of abstraction in this project.
+There were 4 layers of abstraction in this project.
 
 1. The top level control as the driver of the car might see it.  This layer is responsible for operating the switches on the car to control the lights. See `car_light_sim.cpp`.
 2. The car lights layer stores the states of the physical switches on the car.  For instance, if the tail lights have two purposes, e.g. indicator and side light, when the indicator finishes with flashing the light, the tail light should be lit. See `light_switches.cpp`.
 3. This layer emulates the electronics in the car.  It changes the states of the lights under the control of the layer above.  It also implements the flashing of the indicator lights when required. See `electronics.cpp`.
 4. This layer implements the physical layer.  Each light in the layer above is implemented using a number of multicolour LEDs.  In this example, we are simulating two strips of 8 RGBW LEDs. See `leds.cpp`.
+
+After a lot of work, `light_switches.cpp` was removed after all the logic was moved to `electronics.cpp`.
 
 ## Multi-use LEDs
 

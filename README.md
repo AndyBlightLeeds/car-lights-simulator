@@ -25,9 +25,7 @@ make
 
 NOTE: The test code built a while ago but after all the refactoring, it is now broken.  The `car_light_sim` tests most of the functions that matter although it is not automatic.
 
-## Bugs
-
-* None that I'm aware of.
+NOTE: The output of the program is not a nice as it could be, but the code works as I need it, so I'm leaving it as is for now. If I get really bored, I might make it look better.
 
 ## Copyright
 
