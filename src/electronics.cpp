@@ -43,32 +43,38 @@ void Electronics::SetSideLights(bool on) {
 }
 
 void Electronics::SetLeftIndicator(bool on) {
+  std::cout << __func__ << "on: " << on << std::endl;
   // May have to protect this variable in a multithreaded environment.
   new_blink_ = true;
   left_indicator_on_ = on;
 }
 
 void Electronics::SetRightIndicator(bool on) {
+  std::cout << __func__ << "on: " << on << std::endl;
   // May have to protect this variable in a multithreaded environment.
   new_blink_ = true;
   right_indicator_on_ = on;
 }
 
+void Electronics::SetHazardLights(bool on) {
+  std::cout << __func__ << "on: " << on << std::endl;
+  new_blink_ = true;
+  hazard_lights_on_ = on;
+}
+
 void Electronics::Update() {
-  bool blink_state = GetBlinkState();
   std::cout << "Electronics: ";
   std::cout << "H[" << (headlights_on_ ? "ON " : "OFF") << "] ";
   std::cout << "B[" << (brake_lights_on_ ? "ON " : "OFF") << "] ";
   std::cout << "R[" << (reversing_lights_on_ ? "ON " : "OFF") << "] ";
   std::cout << "S[" << (side_lights_on_ ? "ON " : "OFF") << "] ";
-  std::cout << "L[" << (left_indicator_on_ && blink_state ? "ON " : "OFF")
-            << "] ";
-  std::cout << "R[" << (right_indicator_on_ && blink_state ? "ON " : "OFF")
-            << "] ";
+  std::cout << "L[" << (left_indicator_on_ ? "ON " : "OFF") << "] ";
+  std::cout << "R[" << (right_indicator_on_ ? "ON " : "OFF") << "] ";
+  std::cout << "Z[" << (hazard_lights_on_ ? "ON " : "OFF") << "] ";
   std::cout << std::endl;
   // Update the blink state of the LEDs that need to flash.
-  leds_.SetLeftIndicatorCluster(left_indicator_on_ && blink_state);
-  leds_.SetRightIndicatorCluster(right_indicator_on_ && blink_state);
+  bool blink_state = GetBlinkState();
+  EvaluateIndicators(blink_state);
   leds_.Update();
 }
 
@@ -116,4 +122,22 @@ void Electronics::EvaluateTailLights() {
             << side_lights_on_ << " Colour: " << leds_.ColourToChar(colour)
             << std::endl;
   leds_.SetTailLightCluster(colour);
+}
+
+void Electronics::EvaluateIndicators(bool blink_on) {
+  bool left_on = false;
+  bool right_on = false;
+  if (blink_on) {
+    if (hazard_lights_on_) {
+      left_on = true;
+      right_on = true;
+    } else {
+      left_on = left_indicator_on_;
+      right_on = right_indicator_on_;
+    }
+  }
+  std::cout << "Elec. Eval. LRH: " << left_indicator_on_ << right_indicator_on_
+            << hazard_lights_on_ << " On LR: " << left_on << right_on << std::endl;
+  leds_.SetLeftIndicatorCluster(left_on);
+  leds_.SetRightIndicatorCluster(right_on);
 }

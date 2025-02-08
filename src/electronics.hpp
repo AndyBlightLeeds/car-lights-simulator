@@ -12,11 +12,13 @@ class Electronics {
   void SetSideLights(bool on);
   void SetLeftIndicator(bool on);
   void SetRightIndicator(bool on);
+  void SetHazardLights(bool on);
   void Update();
 
  private:
   bool GetBlinkState();
   void EvaluateTailLights();
+  void EvaluateIndicators(bool blink_on);
   // High level state variables (like physical switches on a car).
   bool headlights_on_;
   bool brake_lights_on_;
@@ -24,6 +26,7 @@ class Electronics {
   bool side_lights_on_;
   bool left_indicator_on_;
   bool right_indicator_on_;
+  bool hazard_lights_on_;
   // Internal states.
   // May need to protect this variable in a multithreaded environment.
   bool new_blink_;

@@ -22,43 +22,46 @@ void LightSwitches::SetReversingLights(bool on) { electronics_.SetReversingLight
 void LightSwitches::SetSideLights(bool on) { electronics_.SetSideLights(on); }
 
 void LightSwitches::SetLeftIndicator(bool on) {
-  if (on) {
-    left_indicator_on_ = true;
-  } else {
-    left_indicator_on_ = false;
-  }
-  if (!hazard_lights_on_) {
-    electronics_.SetLeftIndicator(left_indicator_on_);
-  }
+  // if (on) {
+  //   left_indicator_on_ = true;
+  // } else {
+  //   left_indicator_on_ = false;
+  // }
+  // if (!hazard_lights_on_) {
+  //   electronics_.SetLeftIndicator(left_indicator_on_);
+  // }
+  electronics_.SetLeftIndicator(on);
 }
 
 void LightSwitches::SetRightIndicator(bool on) {
-  if (on) {
-    right_indicator_on_ = true;
-  } else {
-    right_indicator_on_ = false;
-  }
-  if (!hazard_lights_on_) {
-    electronics_.SetRightIndicator(right_indicator_on_);
-  }
+  // if (on) {
+  //   right_indicator_on_ = true;
+  // } else {
+  //   right_indicator_on_ = false;
+  // }
+  // if (!hazard_lights_on_) {
+  //   electronics_.SetRightIndicator(right_indicator_on_);
+  // }
+  electronics_.SetRightIndicator(on);
 }
 
 void LightSwitches::SetHazardLights(bool on) {
-  if (on) {
-    // Store current indicator states
-    previous_left_indicator_ = left_indicator_on_;
-    previous_right_indicator_ = right_indicator_on_;
+  // if (on) {
+  //   // Store current indicator states
+  //   previous_left_indicator_ = left_indicator_on_;
+  //   previous_right_indicator_ = right_indicator_on_;
 
-    // Activate hazard lights
-    hazard_lights_on_ = true;
-    electronics_.SetLeftIndicator(true);
-    electronics_.SetRightIndicator(true);
-  } else {
-    // Restore previous indicator states
-    hazard_lights_on_ = false;
-    electronics_.SetLeftIndicator(previous_left_indicator_);
-    electronics_.SetRightIndicator(previous_right_indicator_);
-  }
+  //   // Activate hazard lights
+  //   hazard_lights_on_ = true;
+  //   electronics_.SetLeftIndicator(true);
+  //   electronics_.SetRightIndicator(true);
+  // } else {
+  //   // Restore previous indicator states
+  //   hazard_lights_on_ = false;
+  //   electronics_.SetLeftIndicator(previous_left_indicator_);
+  //   electronics_.SetRightIndicator(previous_right_indicator_);
+  // }
+  electronics_.SetHazardLights(on);
 }
 
 // Call at least every 100ms to update the blink state.
