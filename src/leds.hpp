@@ -22,6 +22,7 @@ class LEDs {
   // Colours
   enum Colour { OFF, RED, GREEN, BLUE, WHITE, ORANGE };
   const char *ColourToChar(Colour colour);
+  void PrintLEDStates();
   void FillRange(size_t start, size_t end, Colour colour);
   // Pixels actually do the lighting up of the LEDs.
   Colour pixels_[NUM_PIXELS];
