@@ -8,20 +8,18 @@
 
 class LEDs {
  public:
+  // Colours
+  enum Colour { kOff, kRed, kBrightRed, kWhite, kBrightWhite, kOrange };
   LEDs();
   void Init();
-  void SetHeadLights(bool on);
-  void SetBrakeLights(bool on);
-  void SetReversingLights(bool on);
-  void SetSideLights(bool on);
-  void SetLeftIndicator(bool on);
-  void SetRightIndicator(bool on);
+  void SetHeadLightCluster(bool on);
+  void SetTailLightCluster(Colour colour);
+  void SetLeftIndicatorCluster(bool on);
+  void SetRightIndicatorCluster(bool on);
   void Update();
+  const char *ColourToChar(Colour colour);
 
  private:
-  // Colours
-  enum Colour { OFF, RED, GREEN, BLUE, WHITE, ORANGE };
-  const char *ColourToChar(Colour colour);
   void PrintLEDStates(const char *func_name = nullptr);
   void FillRange(size_t start, size_t end, Colour colour);
   // Pixels actually do the lighting up of the LEDs.

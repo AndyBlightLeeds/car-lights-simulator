@@ -21,22 +21,25 @@ void Electronics::Init() { leds_.Init(); }
 
 void Electronics::SetHeadLights(bool on) {
   headlights_on_ = on;
-  leds_.SetHeadLights(on);
+  leds_.SetHeadLightCluster(on);
 }
 
 void Electronics::SetBrakeLights(bool on) {
+  std::cout << __func__ << " " << on << std::endl;
   brake_lights_on_ = on;
-  leds_.SetBrakeLights(on);
+  EvaluateTailLights();
 }
 
 void Electronics::SetReversingLights(bool on) {
+  std::cout << __func__ << " " << on << std::endl;
   reversing_lights_on_ = on;
-  leds_.SetReversingLights(on);
+  EvaluateTailLights();
 }
 
 void Electronics::SetSideLights(bool on) {
+  std::cout << __func__ << " " << on << std::endl;
   side_lights_on_ = on;
-  leds_.SetSideLights(on);
+  EvaluateTailLights();
 }
 
 void Electronics::SetLeftIndicator(bool on) {
@@ -64,8 +67,8 @@ void Electronics::Update() {
             << "] ";
   std::cout << std::endl;
   // Update the blink state of the LEDs that need to flash.
-  leds_.SetLeftIndicator(left_indicator_on_ && blink_state);
-  leds_.SetRightIndicator(right_indicator_on_ && blink_state);
+  leds_.SetLeftIndicatorCluster(left_indicator_on_ && blink_state);
+  leds_.SetRightIndicatorCluster(right_indicator_on_ && blink_state);
   leds_.Update();
 }
 
@@ -92,4 +95,25 @@ bool Electronics::GetBlinkState() {
     last_blink = now;
   }
   return blink_state;
+}
+
+void Electronics::EvaluateTailLights() {
+  std::cout << __func__ << std::endl;
+  LEDs::Colour colour = LEDs::kOff;
+  // Set priority of colours of lights.
+  if (reversing_lights_on_) {
+    colour = LEDs::kBrightWhite;
+  } else {
+    if (brake_lights_on_) {
+      colour = LEDs::kBrightRed;
+    } else {
+      if (side_lights_on_) {
+        colour = LEDs::kRed;
+      }  // Else off
+    }
+  }
+  std::cout << "Elec. Eval. RBS: " << reversing_lights_on_ << brake_lights_on_
+            << side_lights_on_ << " Colour: " << leds_.ColourToChar(colour)
+            << std::endl;
+  leds_.SetTailLightCluster(colour);
 }

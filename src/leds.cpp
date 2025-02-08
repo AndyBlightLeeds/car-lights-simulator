@@ -8,7 +8,7 @@
 LEDs::LEDs() {
   std::cout << "Constructor called" << std::endl;
   for (size_t i = 0; i < NUM_PIXELS; i++) {
-    pixels_[i] = OFF;
+    pixels_[i] = kOff;
   }
 }
 void LEDs::Init() { std::cout << "Init called" << std::endl; }
@@ -22,62 +22,49 @@ void LEDs::Init() { std::cout << "Init called" << std::endl; }
 // Reversing lights are LEDs 2, 3, 4, 5.
 // Side lights are LEDs 0, 7, 8, 15.
 
-void LEDs::SetHeadLights(bool on) {
-  FillRange(8, 15, on ? WHITE : OFF);
+void LEDs::SetHeadLightCluster(bool on) {
+  Colour colour = on ? kBrightWhite : kOff;
+  FillRange(9, 14, colour);
 }
 
-void LEDs::SetBrakeLights(bool on) {
-  Colour colour = on ? RED : OFF;
-  FillRange(0, 1, colour);
-  FillRange(6, 7, colour);
+void LEDs::SetTailLightCluster(Colour colour) {
+  FillRange(1, 2, colour);
+  FillRange(5, 6, colour);
   PrintLEDStates(__func__);
 }
 
-void LEDs::SetReversingLights(bool on) {
-  FillRange(2, 5, on ? WHITE : OFF);
-}
-
-void LEDs::SetSideLights(bool on) {
-  Colour colour_rear = on ? RED : OFF;
-  Colour colour_front = on ? WHITE : OFF;
-  pixels_[0] = colour_rear;
-  pixels_[7] = colour_rear;
-  pixels_[8] = colour_front;
-  pixels_[15] = colour_front;
-}
-
-void LEDs::SetLeftIndicator(bool on) {
-  FillRange(0, 1, on ? ORANGE : OFF);
-  FillRange(14, 15, on ? ORANGE : OFF);
+void LEDs::SetLeftIndicatorCluster(bool on) {
+  Colour colour = on ? kOrange : kOff;
+  pixels_[0] = colour;
+  pixels_[15] = colour;
   PrintLEDStates(__func__);
 }
 
-void LEDs::SetRightIndicator(bool on) {
-  FillRange(6, 7, on ? ORANGE : OFF);
-  FillRange(8, 9, on ? ORANGE : OFF);
+void LEDs::SetRightIndicatorCluster(bool on) {
+  Colour colour = on ? kOrange : kOff;
+  pixels_[7] = colour;
+  pixels_[8] = colour;
   PrintLEDStates(__func__);
 }
 
 void LEDs::Update() {
   std::cout << "LEDs: Front 54321098  Rear 01234567" << std::endl;
-  PrintLEDStates();
+  PrintLEDStates("Update    ");
 }
 
 /**** Private */
 
-const char *LEDs::ColourToChar(Colour colour) {
+const char* LEDs::ColourToChar(Colour colour) {
   switch (colour) {
-    case OFF:
+    case kOff:
       return "-";
-    case RED:
+    case kRed:
+    case kBrightRed:
       return "R";
-    case GREEN:
-      return "G";
-    case BLUE:
-      return "B";
-    case WHITE:
+    case kWhite:
+    case kBrightWhite:
       return "W";
-    case ORANGE:
+    case kOrange:
       return "O";
     default:
       return "UNKNOWN";

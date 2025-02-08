@@ -11,53 +11,53 @@ void demo_features(LightSwitches *switches) {
   if (call_count % 20 == 0) {
     switch (state) {
       case 0:
-        switches->SetHeadlights(true);
         std::cout << "\n\nDEMO: Headlights" << std::endl;
+        switches->SetHeadlights(true);
         state++;
         break;
       case 1:
-        switches->SetBrakeLights(true);
         std::cout << "\n\nDEMO: Headlights and brake lights" << std::endl;
+        switches->SetBrakeLights(true);
         state++;
         break;
       case 2:
-        switches->SetBrakeLights(false);
         std::cout << "\n\nDEMO: Headlights, left indicators" << std::endl;
+        switches->SetBrakeLights(false);
         switches->SetLeftIndicator(true);
         state++;
         break;
       case 3:
+        std::cout << "\n\nDEMO: Headlights, right indicators" << std::endl;
         switches->SetLeftIndicator(false);
         switches->SetRightIndicator(true);
-        std::cout << "\n\nDEMO: Headlights, right indicators" << std::endl;
         state++;
         break;
       case 4:
-        switches->SetHazardLights(true);
         std::cout << "\n\nDEMO: Headlights, hazard" << std::endl;
+        switches->SetHazardLights(true);
         state++;
         break;
       case 5:
+        std::cout << "\n\nDEMO: Right indicators" << std::endl;
         switches->SetHazardLights(false);
         switches->SetHeadlights(false);
-        std::cout << "\n\nDEMO: Right indicators" << std::endl;
         state++;
         break;
       case 6:
+        std::cout << "\n\nDEMO: reversing" << std::endl;
         switches->SetRightIndicator(false);
         switches->SetReversingLights(true);
-        std::cout << "\n\nDEMO: reversing" << std::endl;
         state++;
         break;
       case 7:
+        std::cout << "\n\nDEMO: sides on" << std::endl;
         switches->SetReversingLights(false);
         switches->SetSideLights(true);
-        std::cout << "\n\nDEMO: sides on" << std::endl;
         state++;
         break;
       case 8:
-        switches->SetSideLights(false);
         std::cout << "\n\nDEMO: All off" << std::endl;
+        switches->SetSideLights(false);
         state++;
         break;
 

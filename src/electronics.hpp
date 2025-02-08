@@ -16,6 +16,7 @@ class Electronics {
 
  private:
   bool GetBlinkState();
+  void EvaluateTailLights();
   // High level state variables (like physical switches on a car).
   bool headlights_on_;
   bool brake_lights_on_;

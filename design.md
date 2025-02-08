@@ -39,6 +39,8 @@ Therefore, we need to change the allocation of LEDs on the rear lighting strip a
 
 Where: B = Brake, S = Side, I = Indicator, R = Reversing, D = Diagnostic.
 
+From the above, it makes sense for the `LEDs` class to provide methods to set the colours of clusters of lights, not turn on or off lights.  A cluster is a group of LEDs, e.g. 0 and 15 for the left indicator cluster.
+
 ### How to implement the logic for the 3 function LEDs
 
-The state of all three switches: brake light, side light and reversing lights are held in the `LightSwitches` class.  When any switch changes state, the electronics layer is told about it, so when this happens, a function can be called to re-evaluate the output from the current input states.  For example, when the brake light is turned on, the electronics layer records the new state and then calls the evaluate function to update the multi-function LEDs as required.
+The state of all three switches: brake light, side light and reversing lights are held in the `LightSwitches` class.  When any switch changes state, the `Electronics` class is told about it. When a change occurs, a function can be called to re-evaluate the output from the current input states.  For example, when the brake light is turned on, the electronics layer records the new state and then calls the evaluate function to update the cluster of multi-function LEDs as required. This was implemented and tested.
