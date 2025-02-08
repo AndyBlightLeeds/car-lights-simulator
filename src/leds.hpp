@@ -26,11 +26,4 @@ class LEDs {
   void FillRange(size_t start, size_t end, Colour colour);
   // Pixels actually do the lighting up of the LEDs.
   Colour pixels_[NUM_PIXELS];
-  // Fake LEDS values for printing state of LEDS.
-  bool headlights_on_;
-  bool brake_lights_on_;
-  bool reversing_lights_on_;
-  bool side_lights_on_;
-  bool left_indicator_on_;
-  bool right_indicator_on_;
 };

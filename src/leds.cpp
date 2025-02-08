@@ -5,13 +5,7 @@
 #include <string>
 #include <thread>
 
-LEDs::LEDs()
-    : headlights_on_(false),
-      brake_lights_on_(false),
-      reversing_lights_on_(false),
-      side_lights_on_(false),
-      left_indicator_on_(false),
-      right_indicator_on_(false) {
+LEDs::LEDs() {
   std::cout << "Constructor called" << std::endl;
   for (size_t i = 0; i < NUM_PIXELS; i++) {
     pixels_[i] = OFF;
@@ -21,20 +15,18 @@ void LEDs::Init() { std::cout << "Init called" << std::endl; }
 
 // There are two strips of 8 LEDs each in series.
 // LEDS 0-7 are at the back of the car, 8 to 15 are at the front.
-// Left indicators are LEDs 0, 1, 14, 15
-// Right indicators are LEDs 6, 7, 8, 9.
+// Left indicators are LEDs 0, 15
+// Right indicators are LEDs 6, 9.
 // Headlights are LEDs 8 to 15.
-// Tail lights are LEDs 0, 1, 6, 7.
+// Tail lights are LEDs 1, 2, 5, 6.
 // Reversing lights are LEDs 2, 3, 4, 5.
 // Side lights are LEDs 0, 7, 8, 15.
 
 void LEDs::SetHeadLights(bool on) {
-  headlights_on_ = on;
   FillRange(8, 15, on ? WHITE : OFF);
 }
 
 void LEDs::SetBrakeLights(bool on) {
-  brake_lights_on_ = on;
   Colour colour = on ? RED : OFF;
   FillRange(0, 1, colour);
   FillRange(6, 7, colour);
@@ -42,12 +34,10 @@ void LEDs::SetBrakeLights(bool on) {
 }
 
 void LEDs::SetReversingLights(bool on) {
-  reversing_lights_on_ = on;
   FillRange(2, 5, on ? WHITE : OFF);
 }
 
 void LEDs::SetSideLights(bool on) {
-  side_lights_on_ = on;
   Colour colour_rear = on ? RED : OFF;
   Colour colour_front = on ? WHITE : OFF;
   pixels_[0] = colour_rear;
@@ -57,14 +47,12 @@ void LEDs::SetSideLights(bool on) {
 }
 
 void LEDs::SetLeftIndicator(bool on) {
-  left_indicator_on_ = on;
   FillRange(0, 1, on ? ORANGE : OFF);
   FillRange(14, 15, on ? ORANGE : OFF);
   PrintLEDStates(__func__);
 }
 
 void LEDs::SetRightIndicator(bool on) {
-  right_indicator_on_ = on;
   FillRange(6, 7, on ? ORANGE : OFF);
   FillRange(8, 9, on ? ORANGE : OFF);
   PrintLEDStates(__func__);
